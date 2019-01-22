@@ -1,0 +1,24 @@
+{
+  "name": "sleepfile",
+  "version": "0.0.0",
+  "description": "Sleep files for Node.js",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "standard": "^12.0.1",
+    "tape": "^4.9.2"
+  },
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafintosh/sleepfile.git"
+  },
+  "author": "Mathias Buus (@mafintosh)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafintosh/sleepfile/issues"
+  },
+  "homepage": "https://github.com/mafintosh/sleepfile"
+}
