@@ -104,7 +104,7 @@ module.exports = class SleepFile extends Nanoresource {
     for (let i = 0; i < arr.length; i++) {
       const offset = i * this.valueSize
       const end = i * this.valueSize + this.valueSize
-      arr[i] = this.valueEncoding ? this.valueEncodig.decode(buf, offset, end) : buf.slice(offset, end)
+      arr[i] = this.valueEncoding ? this.valueEncoding.decode(buf, offset, end) : buf.slice(offset, end)
     }
 
     this.inactive(cb, null, arr)
