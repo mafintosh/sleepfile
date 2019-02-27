@@ -9,9 +9,10 @@ npm install sleepfile
 ## Usage
 
 ``` js
-const sleepfile = require('sleepfile')
+const Sleepfile = require('sleepfile')
+const ram = require('random-access-memory')
 
-const file = sleepfile()
+const file = new Sleepfile(ram())
 
 file.put(42, Buffer.alloc(42), function (err) {
   console.log('Inserted an entry at index 42')
@@ -23,7 +24,7 @@ file.put(42, Buffer.alloc(42), function (err) {
 
 ## API
 
-#### `file = sleepfile(storage, [options])`
+#### `file = new Sleepfile(storage, [options])`
 
 Create a new sleep file. Storage should be a [random-access-storage](https://github.com/random-access-storage/random-access-storage) instance.
 

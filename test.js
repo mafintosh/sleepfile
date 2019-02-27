@@ -1,9 +1,9 @@
 const tape = require('tape')
 const ram = require('random-access-memory')
-const sleep = require('./')
+const Sleep = require('./')
 
 tape('basic', function (assert) {
-  const file = sleep(ram())
+  const file = new Sleep(ram())
 
   file.put(42, Buffer.alloc(42), function (err) {
     assert.error(err, 'no error')
@@ -16,7 +16,7 @@ tape('basic', function (assert) {
 })
 
 tape('basic overwrite', function (assert) {
-  const file = sleep(ram())
+  const file = new Sleep(ram())
 
   file.put(42, Buffer.alloc(42), function (err) {
     assert.error(err, 'no error')
@@ -33,7 +33,7 @@ tape('basic overwrite', function (assert) {
 })
 
 tape('batch', function (assert) {
-  const file = sleep(ram())
+  const file = new Sleep(ram())
   const expected = Buffer.concat([ Buffer.from('hi'), Buffer.alloc(40) ])
 
   const batch = [
@@ -55,7 +55,7 @@ tape('batch', function (assert) {
 })
 
 tape('set metadata', function (assert) {
-  const file = sleep(ram(), {
+  const file = new Sleep(ram(), {
     name: 'a name',
     valueSize: 42,
     magicBytes: 0x12345678

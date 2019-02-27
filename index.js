@@ -1,8 +1,6 @@
 const Nanoresource = require('nanoresource')
 
-module.exports = (storage, opts) => new SleepFile(storage, opts)
-
-class SleepFile extends Nanoresource {
+module.exports = class SleepFile extends Nanoresource {
   constructor (storage, opts) {
     if (!opts) opts = {}
 
