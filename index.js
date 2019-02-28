@@ -78,13 +78,13 @@ module.exports = class SleepFile extends Nanoresource {
     if (!this.readable) return openAndGet(this, index, cb)
     if (!this.active(cb)) return
 
-    this.storage.read(32 + index * this.valueSize, this.valueSize, this._decode.bind(this, cb))
+    this.storage.read(32 + index * this.valueSize, this.valueSize, this._decode.bind(this, cb, index))
   }
 
-  _decode (cb, err, buf) {
+  _decode (cb, index, err, buf) {
     if (err) return cb(err)
 
-    const value = this.valueEncoding ? this.valueEncoding.decode(buf, 0) : buf
+    const value = this.valueEncoding ? this.valueEncoding.decode(buf, 0, this.valueSize, index) : buf
 
     this.inactive(cb, null, value)
   }
@@ -93,10 +93,10 @@ module.exports = class SleepFile extends Nanoresource {
     if (!this.readable) return openAndGetBatch(this, offset, len, cb)
     if (!this.active(cb)) return
 
-    this.storage.read(32 + offset * this.valueSize, len * this.valueSize, this._decodeBatch.bind(this, cb))
+    this.storage.read(32 + offset * this.valueSize, len * this.valueSize, this._decodeBatch.bind(this, cb, offset))
   }
 
-  _decodeBatch (cb, err, buf) {
+  _decodeBatch (cb, index, err, buf) {
     if (err) return cb(err)
 
     const arr = new Array(buf.length / this.valueSize)
@@ -104,7 +104,7 @@ module.exports = class SleepFile extends Nanoresource {
     for (let i = 0; i < arr.length; i++) {
       const offset = i * this.valueSize
       const end = i * this.valueSize + this.valueSize
-      arr[i] = this.valueEncoding ? this.valueEncoding.decode(buf, offset, end) : buf.slice(offset, end)
+      arr[i] = this.valueEncoding ? this.valueEncoding.decode(buf, offset, end, index++) : buf.slice(offset, end)
     }
 
     this.inactive(cb, null, arr)
