@@ -67,7 +67,7 @@ module.exports = class SleepFile extends Nanoresource {
           version: 0,
           valueSize: self.valueSize,
           name: self.name,
-          length: Math.floor((st.size - 32) / self.valueSize),
+          length: Math.max(0, Math.floor((st.size - 32) / self.valueSize)),
           density: st.blocks ? (st.blocks / 8) / Math.ceil(st.size / 4096) : 1
         })
       })
@@ -77,7 +77,6 @@ module.exports = class SleepFile extends Nanoresource {
   get (index, cb) {
     if (!this.readable) return openAndGet(this, index, cb)
     if (!this.active(cb)) return
-
     this.storage.read(32 + index * this.valueSize, this.valueSize, this._decode.bind(this, cb, index))
   }
 
@@ -92,7 +91,6 @@ module.exports = class SleepFile extends Nanoresource {
   getBatch (offset, len, cb) {
     if (!this.readable) return openAndGetBatch(this, offset, len, cb)
     if (!this.active(cb)) return
-
     this.storage.read(32 + offset * this.valueSize, len * this.valueSize, this._decodeBatch.bind(this, cb, offset))
   }
 
