@@ -59,16 +59,14 @@ module.exports = class SleepFile extends Nanoresource {
     this.open(function (err) {
       if (err) return cb(err)
 
-      self.storage.stat(function (err, st) {
-        if (err) return cb(err)
-
+      self.storage.stat(function (_, st) {
         cb(null, {
           magicBytes: self.magicBytes,
           version: 0,
           valueSize: self.valueSize,
           name: self.name,
-          length: Math.max(0, Math.floor((st.size - 32) / self.valueSize)),
-          density: st.blocks ? (st.blocks / 8) / Math.ceil(st.size / 4096) : 1
+          length: st ? Math.max(0, Math.floor((st.size - 32) / self.valueSize)) : 0,
+          density: st ? (st.blocks ? (st.blocks / 8) / Math.ceil(st.size / 4096) : 1) : 0
         })
       })
     })
