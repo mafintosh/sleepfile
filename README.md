@@ -70,6 +70,11 @@ Get metadata about the sleepfile itself. Returned object looks like this:
 }
 ```
 
+#### `file.head(callback)`
+
+Get the value out with the highest index, i.e. `stat.length - 1`.
+If the file is empty `null` is returned.
+
 ## License
 
 MIT

@@ -72,6 +72,14 @@ module.exports = class SleepFile extends Nanoresource {
     })
   }
 
+  head (cb) {
+    this.stat((err, st) => {
+      if (err) return cb(err)
+      if (!st.length) return cb(null, null)
+      this.get(st.length - 1, cb)
+    })
+  }
+
   get (index, cb) {
     if (!this.readable) return openAndGet(this, index, cb)
     if (!this.active(cb)) return

@@ -15,6 +15,23 @@ tape('basic', function (assert) {
   })
 })
 
+tape('head', function (assert) {
+  const file = new Sleep(ram())
+
+  file.head(function (err, head) {
+    assert.error(err, 'no error')
+    assert.same(head, null)
+    file.put(42, Buffer.alloc(42), function (err) {
+      assert.error(err, 'no error')
+      file.head(function (err, head) {
+        assert.error(err, 'no error')
+        assert.same(head, Buffer.alloc(42))
+        assert.end()
+      })
+    })
+  })
+})
+
 tape('basic overwrite', function (assert) {
   const file = new Sleep(ram())
 
