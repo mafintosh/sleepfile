@@ -13,6 +13,7 @@ module.exports = class SleepFile extends Nanoresource {
     this.name = opts.name || ''
     this.writable = false
     this.readable = false
+    this.overwrite = !!opts.overwrite
   }
 
   _open (cb) {
@@ -21,8 +22,15 @@ module.exports = class SleepFile extends Nanoresource {
     this.storage.open(function (err) {
       if (err && err.code === 'ENOENT') return done(null)
       if (err) return done(err)
-      self.storage.read(0, 32, onheader)
+      if (!self.overwrite) return self.storage.read(0, 32, onheader)
+      self.storage.stat(overwrite)
     })
+
+    function overwrite (err, st) {
+      if (err && err.code === 'ENOENT') return done(null)
+      if (err) return done(err)
+      self.storage.del(0, st.size, done)
+    }
 
     function onheader (_, buf) {
       if (!buf) return done(null)

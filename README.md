@@ -35,7 +35,8 @@ Options include
   magicBytes: 0x00000000, // set a magic bytes header of the file
   valueSize: 42, // explicitly set the valueSize (infered on first put otherwise)
   valueEncoding: encoding, // optionally set an abstract-encoding for the values
-  name: 'algo' // optionally set the algorithm name in the header
+  name: 'algo', // optionally set the algorithm name in the header
+  overwrite: false // reset the file content
 }
 ```
 

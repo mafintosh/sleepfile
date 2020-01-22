@@ -93,3 +93,17 @@ tape('set metadata', function (assert) {
     })
   })
 })
+
+tape('overwrite file', function (assert) {
+  const data = ram()
+  const file = new Sleep(data)
+
+  file.put(0, Buffer.from('block'), function (err) {
+    assert.error(err, 'no error')
+    const newFile = new Sleep(data, { overwrite: true })
+    newFile.get(0, function (_, data) {
+      assert.notOk(data, 'data is gone')
+      assert.end()
+    })
+  })
+})
