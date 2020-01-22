@@ -1,6 +1,6 @@
 {
   "name": "sleepfile",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Sleep files for Node.js",
   "main": "index.js",
   "dependencies": {
