@@ -85,8 +85,7 @@ module.exports = class SleepFile extends Nanoresource {
     this.open((err) => {
       if (err) return cb(err)
       this.storage.stat((err, st) => {
-        if (err && err.code === 'ENOENT') return cb(null)
-        if (err) return cb(err)
+        if (err) return cb(null)
         if (st.size <= 32) return cb(null)
         this.storage.del(32, st.size - 32, cb)
       })
