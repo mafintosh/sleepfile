@@ -107,3 +107,19 @@ tape('overwrite file', function (assert) {
     })
   })
 })
+
+tape('clear', function (assert) {
+  const file = new Sleep(ram(), { name: 'name' })
+
+  file.put(42, Buffer.alloc(42).fill(1), function (err) {
+    assert.error(err, 'no error')
+    file.clear(function () {
+      file.stat(function (err, st) {
+        assert.error(err, 'no error')
+        assert.same(st.name, 'name')
+        assert.same(st.length, 0)
+        assert.end()
+      })
+    })
+  })
+})
